@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipie_app/data/dummy_data.dart';
+import 'package:recipie_app/screen/category_meals_screen.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
@@ -20,30 +21,28 @@ class CategoriesScreen extends StatelessWidget {
         itemCount: dummy_categories.length,
         itemBuilder: (context, index) {
           final category = dummy_categories[index];
-          return CategoryItem(
-            title: category.title,
+          return GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => CategoryMealsScreen(
+                    categoryId: category.id,
+                    categoryTtile: category.title,
+                  ),
+                ),
+              );
+            },
+            child: Container(
+              color: category.color,
+              child: Center(
+                child: Text(
+                  category.title,
+                  style: TextStyle(fontSize: 22),
+                ),
+              ),
+            ),
           );
         },
-      ),
-    );
-  }
-}
-
-class CategoryItem extends StatelessWidget {
-  const CategoryItem({
-    super.key,
-    required this.title,
-  });
-  final String title;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.amber,
-      child: Center(
-        child: Text(
-          title,
-          style: TextStyle(fontSize: 22),
-        ),
       ),
     );
   }
